@@ -1,13 +1,17 @@
-# Project Name
+# Review Service
 
-> Project description
+> Provide review retrieval service for SpaceWork.com item Workspace item page.
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/space-work/nearby-workspaces
+  - https://github.com/space-work/amenities-service
+  - https://github.com/space-work/contact-widget-service
+  - https://github.com/space-work/workspace-service
+  - https://github.com/space-work/workspace-description-service
+  - https://github.com/space-work/photos-service
+  - https://github.com/space-work/location-service
+
 
 ## Table of Contents
 
