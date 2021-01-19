@@ -1,6 +1,10 @@
 ## MAC files ##
 .DS_Store
 
+
+## CONFIG
+.env
+
 ## NPM ##
 npm
 npm-debug.log
