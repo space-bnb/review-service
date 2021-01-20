@@ -53,7 +53,7 @@ const reviewDataGenerator = (idNum, limit) => {
 
 const makeReviewDataArray = () => {
   const reviewData = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 1; i <= 100; i++) {
     reviewData.push(reviewDataGenerator(i, 15))
   }
   return reviewData;
