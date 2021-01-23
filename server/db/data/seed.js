@@ -1,6 +1,5 @@
 const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../', '../', '../', '.env')});
-require('..')
 const { ReviewData } = require('../models/Review');
 
 const lorem = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui totam quasi tenetur eaque libero, magnam iure sint repellendus similique vero error id aspernatur, omnis ad asperiores placeat natus. Praesentium, velit.'.replace(/[.,]/g,"").split(' ');
@@ -59,18 +58,43 @@ const makeReviewDataArray = () => {
   return reviewData;
 }
 
-const seedReviews = async () => {
+exports.seedReviews = async (MONGOURI) => {
+  const db = require(path.resolve(__dirname, '../', 'index.js'));
+  db.connect(MONGOURI);
   try {
     await ReviewData.deleteMany({});
     console.log("Reviews deleted")
     const reviewData = makeReviewDataArray();
     const res = await ReviewData.create(reviewData);
     console.log(`${res.length} reviews created`);
+    db.close();
     process.exit();
   } catch (error) {
     console.log(error.message);
+    db.close();
     process.exit(1);
   }
 }
 
-seedReviews();
+exports.deleteReviews = async (MONGOURI) => {
+  const db = require(path.resolve(__dirname, '../', 'index.js'));
+  db.connect(MONGOURI);
+  try {
+    await ReviewData.deleteMany({});
+    console.log('Reviews have been deleted');
+    db.close();
+    process.exit();
+  } catch (error) {
+    console.log(error.message);
+    db.close();
+    process.exit(1);
+  }
+}
+
+if (process.argv[2] === '-s') {
+  exports.seedReviews(process.env.MONGO_URI_DEV);
+} else {
+  console.log(`run with -s flag to seed dev records`);
+}
+
+
