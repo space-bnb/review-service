@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "nodemon server",
-    "seed": "node server/db/data/seed.js"
+    "seed": "node server/db/data/seed.js -s"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
