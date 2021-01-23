@@ -8,7 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "dev": "nodemon server/server.js",
+    "dev": "nodemon server",
     "seed": "node server/db/data/seed.js"
   },
   "dependencies": {
