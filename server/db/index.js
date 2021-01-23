@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const db = mongoose.connect(process.env.MONGO_URI_DEV, {
+exports.connect = (URI) => mongoose.connect(URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}, () => console.log("mongoose connected"))
+}, () => console.log(`mongoose connected to ${URI}`));
 
-module.exports = db;
+exports.close = () => mongoose.connection.close();
