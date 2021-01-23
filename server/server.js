@@ -11,4 +11,4 @@ app.get('/reviews-api/all/:workspaceId', reviews);
 app.get('*', notFound);
 app.use(errors);
 
-app.listen(process.env.PORT, () => console.log("app running on port 5002"));
+app.listen(process.env.PORT, () => console.log(`Service running on port ${process.env.PORT}`));
