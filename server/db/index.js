@@ -1,8 +1,16 @@
 const mongoose = require('mongoose');
 
-exports.connect = (URI) => mongoose.connect(URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, () => console.log(`mongoose connected to ${URI}`));
+exports.connect = (URI, cb) => new Promise((resolve, reject) => {
+  try {
+    mongoose.connect(URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }, cb);
+    resolve();
+  } catch (error) {
+    reject('cannot connect to db');
+  }
+});
+
 
 exports.close = () => mongoose.connection.close();
