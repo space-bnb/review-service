@@ -11,7 +11,9 @@ const { ReviewData }= require('../db/models/Review');
 
 const TESTDB = process.env.MONGO_URI_TEST;
 
-afterAll(() => {
+afterAll(async () => {
+  await seeder.deleteReviews(TESTDB);
+  db.close();
   server.close();
 });
 
@@ -21,12 +23,6 @@ describe('server', () => {
   beforeAll(async() => {
     await seeder.seedReviews(TESTDB);
     await db.connect(TESTDB);
-  });
-
-  // drop database after batch of tests are done
-  afterAll(async() => {
-    await seeder.deleteReviews(TESTDB);
-    db.close();
   });
 
   describe('database', () => {
@@ -83,7 +79,7 @@ describe('server', () => {
           });
       });
 
-      it('should return a status 404 for non-existant ids', (done) => {
+      it('should return a status 404 for non-existent ids', (done) => {
         const testId = 1000;
         request(app)
           .get(`/api/reviews-api/info/${testId}`)
@@ -116,7 +112,7 @@ describe('server', () => {
 
       });
       
-      it('should return a 404 for a non-existant id', (done) => {
+      it('should return a 404 for a non-existent id', (done) => {
         const testId = 744;
         request(app)
           .get(`/api/reviews-api/all/${testId}`)
@@ -126,12 +122,12 @@ describe('server', () => {
             expect(body.status)
               .toBe(404);
             done();
-          })
+          });
       });
  
     });
 
-    it('should return a 404 for a non-existant route', (done) => {
+    it('should return a 404 for a non-existent route', (done) => {
       request(app)
         .get('/api/not-a-route')
         .end((err, res) => {
