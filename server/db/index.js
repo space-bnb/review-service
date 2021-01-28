@@ -5,12 +5,17 @@ exports.connect = (URI, cb) => new Promise((resolve, reject) => {
     mongoose.connect(URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
-    }, cb);
-    resolve();
+    }, (err, data) => {
+      if (cb) {
+        resolve(cb(err, data));
+      } else {
+        if(err) reject(err);
+        resolve(data);
+      }
+    });
   } catch (error) {
     reject('cannot connect to db');
   }
 });
-
 
 exports.close = () => mongoose.connection.close();

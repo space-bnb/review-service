@@ -44,7 +44,7 @@ describe('server', () => {
       })
       let pass = true;
       let count = 0;
-      let keys = Array.from(Object.keys(track));
+      let keys = Object.keys(track);
       keys.forEach(i => {
         if (track[i] === 0) {
           pass = false;
