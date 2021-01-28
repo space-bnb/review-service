@@ -1,8 +1,16 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const db = mongoose.connect(process.env.MONGO_URI_DEV, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, () => console.log("mongoose connected"))
+exports.connect = (URI, cb) => new Promise((resolve, reject) => {
+  try {
+    mongoose.connect(URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }, cb);
+    resolve();
+  } catch (error) {
+    reject('cannot connect to db');
+  }
+});
 
-module.exports = db;
+
+exports.close = () => mongoose.connection.close();

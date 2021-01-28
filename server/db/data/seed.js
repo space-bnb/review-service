@@ -1,6 +1,5 @@
 const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../', '../', '../', '.env')});
-require('..')
 const { ReviewData } = require('../models/Review');
 
 const lorem = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui totam quasi tenetur eaque libero, magnam iure sint repellendus similique vero error id aspernatur, omnis ad asperiores placeat natus. Praesentium, velit.'.replace(/[.,]/g,"").split(' ');
@@ -59,18 +58,48 @@ const makeReviewDataArray = () => {
   return reviewData;
 }
 
-const seedReviews = async () => {
-  try {
-    await ReviewData.deleteMany({});
-    console.log("Reviews deleted")
-    const reviewData = makeReviewDataArray();
-    const res = await ReviewData.create(reviewData);
-    console.log(`${res.length} reviews created`);
-    process.exit();
-  } catch (error) {
-    console.log(error.message);
-    process.exit(1);
-  }
+exports.seedReviews =  (MONGOURI) => {
+  return new Promise(async (resolve, reject) => {
+    const db = require(path.resolve(__dirname, '../', 'index.js'));
+    await db.connect(MONGOURI);
+    console.log('seeder connected to db');
+    try {
+      await ReviewData.deleteMany({});
+      console.log("Reviews deleted")
+      const reviewData = makeReviewDataArray();
+      const res = await ReviewData.create(reviewData);
+      console.log(`${res.length} reviews created`);
+      resolve();
+    } catch (error) {
+      console.log(error.message);
+      db.close();
+      reject();
+    }
+  })
+};
+
+exports.deleteReviews = (MONGOURI) => {
+  return new Promise(async (resolve, reject) => {
+    const db = require(path.resolve(__dirname, '../', 'index.js'));
+    db.connect(MONGOURI);
+    try {
+      await ReviewData.deleteMany({});
+      console.log('Reviews have been deleted');
+      resolve();
+    } catch (error) {
+      console.log(error.message);
+      db.close();
+      reject(error);
+    }
+  })
+    .catch(err => { throw err });
 }
 
-seedReviews();
+if (process.argv[2] === '-s') {
+  exports.seedReviews(process.env.MONGO_URI_DEV)
+  .then(() => process.exit());
+} else {
+  console.log(`run with -s flag to seed dev records`);
+}
+
+

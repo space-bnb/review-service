@@ -1,14 +1,17 @@
 const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../', '.env')});
-require('./db');
 const express = require('express');
 const { reviewInfo, reviews, notFound, errors } = require('./controllers/');
 
 const app = express();
 
-app.get('/reviews-api/info/:workspaceId', reviewInfo);
-app.get('/reviews-api/all/:workspaceId', reviews);
+app.get('/api/reviews-api/info/:workspaceId', reviewInfo);
+app.get('/api/reviews-api/all/:workspaceId', reviews);
 app.get('*', notFound);
 app.use(errors);
 
-app.listen(process.env.PORT, () => console.log(`Service running on port ${process.env.PORT}`));
+const PORT = process.env.PORT || 5002;
+
+//export server for closing connections, app for accessing middleware and endpoints
+exports.server = app.listen(PORT, () => console.log(`Review service running on ${PORT}`));
+exports.app = app;
