@@ -1,0 +1,100 @@
+$light-grey: rgb(230, 230, 230);
+$medium-grey:rgb(137, 137, 137);
+$dark-grey: rgb(76, 76, 76);
+.reviews-section-container {
+  @extend .bottom-padding;
+  font-family: Arial;
+  font-size: 15px;
+  color: black;
+  .reviews-section-title {
+    @extend .bottom-margin;
+    font-weight: 600;
+    line-height: 2rem;
+    color: black;
+  }
+
+  .reviews-section-stats{
+    @extend .bottom-margin;
+    @extend .light-border-bottom;
+    @extend .bottom-padding;
+    font-weight: 400;
+    color: black;
+  }
+  
+  .reviews-section-card {
+    @extend .bottom-padding;
+    @extend .light-border-bottom;
+    padding-top: 5px;
+    line-height: .7rem;
+    background: white;
+    .reviews-section-author {
+      font-weight: 600;
+      background: white
+    }
+    
+    .reviews-section-date {
+      @extend .medium-grey-text;
+    }
+
+    .reviews-section-stars {
+      color: gold;
+    }
+
+    .reviews-section-content {
+      line-height: 1.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: black;
+    }
+
+  }
+  
+  .grey-border-bottom {
+    border-bottom: 1px solid grey;
+  }
+
+  .light-border-bottom {
+    border-bottom: 1px solid $light-grey;
+  }
+
+  .medium-grey-text {
+    color: $medium-grey;
+  }
+
+  .bottom-margin {
+    margin-bottom: 1.5rem;
+  }
+
+  .bottom-padding {
+    padding-bottom: 1.5rem;
+  }
+  .grey-line {
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 15px;
+    vertical-align: text-bottom;
+    color: $light-grey;
+  }
+
+  .star-container {
+    display: inline-bloc;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .star {
+    margin-right: 12px;
+    color: rgb(255,204,0)
+  }
+
+  .star-small {
+    vertical-align: middle;
+    color:  rgb(255,204,0);
+    margin-right: 6px;
+    margin-bottom: 12px;
+  }
+  
+}
+
+

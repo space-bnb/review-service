@@ -5,8 +5,10 @@ const { reviewInfo, reviews, notFound, errors } = require('./controllers/');
 
 const app = express();
 
-app.get('/api/reviews-api/info/:workspaceId', reviewInfo);
-app.get('/api/reviews-api/all/:workspaceId', reviews);
+app.use(require('cors')());
+app.get('/api/reviews/info/:workspaceId', reviewInfo);
+app.get('/api/reviews/all/:workspaceId', reviews);
+app.use('/', express.static(path.join(__dirname, '../', 'client', 'dist')));
 app.get('*', notFound);
 app.use(errors);
 
