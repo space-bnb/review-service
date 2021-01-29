@@ -4,11 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Space work reviews</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin: auto;
+      width: 90%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: 60% 40%;
+      grid-gap: 15px; 
+    }
+
+    @media screen and (max-width: 1000px) {
+      .container {
+        display: block;
+      }
+
+      .col-2 {
+        display: none;
+      }
+    }
+
+    .col-1 {
+      /* background: blue; */
+      height: auto;
+    }
+
+    .col-2 {
+      /* background: red; */
+      height: 100vh
+    }
+  </style>
 </head>
+
 <body>
-  <div class="container py-5">
-    <div id="reviews-service"></div>
+  <div class="container">
+    <div class="col-1">
+      <div id="workspace-description"></div>
+      <div id="reviews-service"></div>
+      <div id="nearby-workspaces"></div>
+    </div>
+    <div class="col-2">
+      <div id="app"></div>
+    </div>
   </div>
 </body>
 <script src="https://kit.fontawesome.com/bb32e62705.js" crossorigin="anonymous"></script>
