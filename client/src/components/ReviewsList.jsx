@@ -69,9 +69,9 @@ export default ({ reviewsList = null }) => {
       { allReviews.slice(0, show).map(review => <Review review={review} />)}
       <br/>
 
-      { (allReviews.length > show && show < 9) && LoadMore }
+      { (allReviews.length > show && show < 9) && <LoadMore /> }
 
-      { (moreReviews && show >= 9) && SeeAll }
+      { (moreReviews && show >= 9) && <SeeAll /> }
     </>
   );
 
