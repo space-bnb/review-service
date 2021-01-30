@@ -1,20 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 $light-grey: rgb(230, 230, 230);
 $medium-grey:rgb(137, 137, 137);
 $dark-grey: rgb(76, 76, 76);
+$blue-accent: rgb(49,0,255);
+
 .reviews-section-container {
   @extend .bottom-padding;
-  font-family: Arial;
-  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+  // font-size: 15px;
   color: black;
   .reviews-section-title {
     @extend .bottom-margin;
     font-weight: 600;
-    line-height: 2rem;
+    font-size: 24px;
+    // line-height: 2rem;
     color: black;
   }
 
   .reviews-section-stats{
-    @extend .bottom-margin;
     @extend .light-border-bottom;
     @extend .bottom-padding;
     font-weight: 400;
@@ -28,7 +32,9 @@ $dark-grey: rgb(76, 76, 76);
     line-height: .7rem;
     background: white;
     .reviews-section-author {
+      @extend .top-padding;
       font-weight: 600;
+      line-height: 1rem;
       background: white
     }
     
@@ -42,8 +48,6 @@ $dark-grey: rgb(76, 76, 76);
 
     .reviews-section-content {
       line-height: 1.5rem;
-      white-space: nowrap;
-      overflow: hidden;
       text-overflow: ellipsis;
       color: black;
     }
@@ -69,6 +73,10 @@ $dark-grey: rgb(76, 76, 76);
   .bottom-padding {
     padding-bottom: 1.5rem;
   }
+
+  .top-padding {
+    padding-top: 1rem;
+  }
   .grey-line {
     margin-left: 15px;
     margin-right: 15px;
@@ -89,10 +97,20 @@ $dark-grey: rgb(76, 76, 76);
   }
 
   .star-small {
+    line-height: 1rem;
     vertical-align: middle;
     color:  rgb(255,204,0);
     margin-right: 6px;
-    margin-bottom: 12px;
+  }
+
+  .blue-links {
+    color: $blue-accent;
+    text-decoration: none;
+  }
+
+  .blue-links:hover {
+    cursor: pointer;
+    text-decoration: none;
   }
   
 }
