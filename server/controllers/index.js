@@ -30,8 +30,8 @@ exports.reviews = ah(async (req, res, next) => {
 });
 
 // error for non existing paths
-exports.notFound = (req, res) => res.json({status: 404, message: "Path does not exist"});
+exports.notFound = (req, res) => res.status(404).json({status: 404, message: "Path does not exist"});
 
 // error handling endpoint
-exports.errors = (err, req, res, next) => res.json({status: err.status || 500, message: err.message || 'There was an error'});
+exports.errors = (err, req, res, next) => res.json({success: false, status: err.status || 500, message: err.message || 'There was an error'});
 
