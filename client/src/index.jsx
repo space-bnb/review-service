@@ -5,9 +5,7 @@ import './index.scss';
 
 const ReviewsService = () => {
   return (
-    <div>
       <ReviewsContainer />
-    </div>
   );
 };
 
