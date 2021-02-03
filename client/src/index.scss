@@ -6,15 +6,21 @@ $dark-grey: rgb(76, 76, 76);
 $blue-accent: rgb(49,0,255);
 
 .reviews-section-container {
+  $light-grey: rgb(230, 230, 230);
+  $medium-grey:rgb(137, 137, 137);
+  $dark-grey: rgb(76, 76, 76);
+  $blue-accent: rgb(49,0,255);
   @extend .bottom-padding;
   font-family: 'Roboto', sans-serif;
   // font-size: 15px;
   color: black;
   .reviews-section-title {
     @extend .bottom-margin;
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
     font-weight: 600;
-    font-size: 24px;
-    // line-height: 2rem;
+    line-height: 2.75rem;
+    margin-bottom: 1rem;
     color: black;
   }
 
@@ -34,15 +40,17 @@ $blue-accent: rgb(49,0,255);
     .reviews-section-author {
       @extend .top-padding;
       font-weight: 600;
-      line-height: 1rem;
+      line-height: 1.5rem;
       background: white
     }
     
     .reviews-section-date {
       @extend .medium-grey-text;
+      line-height: 1.5rem;
     }
 
     .reviews-section-stars {
+      line-height: 1.5rem;
       color: gold;
     }
 
