@@ -9,4 +9,4 @@ const ReviewsService = () => {
   );
 };
 
-ReactDOM.render(<ReviewsService />, document.getElementById('reviews-service'));
+ReactDOM.render(<ReviewsService />, document.getElementById('reviews'));
