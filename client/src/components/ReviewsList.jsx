@@ -36,19 +36,17 @@ export default ({ reviewsList = null }) => {
 
   // case handling
   if (allReviews === null) {
-    return <div></div>
+    return <></>;
   }
 
   if (allReviews === false) {
-    return <div>There was an error</div>
+    return <></>;
   }
 
   if (allReviews.length === 0) {
     return (
-      <div>
-        <h3>No reviews</h3>
-      </div>
-    )
+      <></>
+    );
   }
 
   // external link if total number if reviews exceeds 9 and 9 reviews are currently being displayed
