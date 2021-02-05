@@ -22,15 +22,19 @@ export default ({ review }) => {
     setLimit(false);
   };
 
+  const Stars = () => (
+    <div className="reviews-section-stars">
+       { new Array(review.rating).fill( <span className="fas fa-star fa-xs star-small"></span>)}
+    </div>
+  );
+
   const ReadMore = () => <a className="blue-links" onClick={handleReadMore}>&nbsp; Read more</a>;
 
   return (
     <div className="reviews-section-card">
       <p className="reviews-section-author">{ review.author }</p>
       <p className="reviews-section-date">{ date || '' } </p>
-      <div className="reviews-section-stars">
-        <span className="fas fa-star fa-xs star-small"></span><span className="fas fa-star fa-xs star-small"></span><span className="fas fa-star fa-xs star-small"></span>
-      </div>
+      <Stars />
       <div className="reviews-section-content">
         <p>
           {/* if content is long, truncate and display read more button */}
