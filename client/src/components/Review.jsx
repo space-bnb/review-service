@@ -24,11 +24,11 @@ export default ({ review }) => {
 
   const Stars = () => (
     <div className="reviews-section-stars">
-       { new Array(review.rating).fill( <span className="fas fa-star fa-xs star-small"></span>)}
+       { new Array(review.rating).fill( <span className="fas fa-star fa-xs star-small"></span>) }
     </div>
   );
 
-  const ReadMore = () => <a className="blue-links" onClick={handleReadMore}>&nbsp; Read more</a>;
+  const ReadMore = () => <a className="blue-links read-more" onClick={handleReadMore}>&nbsp; Read more</a>;
 
   return (
     <div className="reviews-section-card">
