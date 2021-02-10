@@ -10,8 +10,8 @@ export default ({ reviewInfo = null }) => {
   if (info === null) {
     getReviewInfo(getWorkspaceId())
       .then(({ data }) => {
-        if (data.status === 404) {
-          setInfo({avg: 0, reviewCount: 0});
+        if (data.success === false) {
+          setInfo(false);
         } else {
           setInfo(data);
         }
@@ -20,11 +20,11 @@ export default ({ reviewInfo = null }) => {
   }
 
   if (info === null) {
-    return <div></div>;
+    return <></>;
   }
 
   if (info === false) {
-    return <div><h3>There was an error, please try again later.</h3></div>;
+    return <></>;
   }
 
   const { avg, reviewCount } = info;

@@ -6,14 +6,14 @@ import { getReviewInfo, getWorkspaceId } from '../actions/index.js';
 
 // container component for review section
 // renders empty on error or no record
-export default ({ exists = null}) => {
+export default ({ exists = null, reviewsList = null, reviewInfo = null }) => {
   const [recordExists, setExists] = useState(exists);
   // simple handling for errors and non-existent records
   if (recordExists === null) {
     getReviewInfo(getWorkspaceId())
       .then(({ data }) => {
-        if (data.success === false && data.status === 404) {
-          setExists(false)
+        if (data.success === false) {
+          setExists(false);
         } else {
           setExists(true);
         }
@@ -23,14 +23,14 @@ export default ({ exists = null}) => {
 
   // return empty if error or no record
   if (recordExists === null || recordExists === false) {
-    return <div></div>
+    return <></>;
   }
 
   return (
   <div className="reviews-section-container">
-    <Title />
-    <Stats />
-    <ReviewsList />
+    <Title/>
+    <Stats reviewInfo={reviewInfo}/>
+    <ReviewsList reviewsList={reviewsList}/>
   </div>
   );
 ;} 

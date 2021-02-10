@@ -8,7 +8,8 @@ export default ({ reviewsList = null }) => {
   // show limits number of displayed reviews up to 9, moreReviews controls if external link is shown
   const [allReviews, setReviews] = useState(reviewsList);
   const [show, setShow] = useState(3);
-  const [moreReviews, setMoreReviews] = useState(false);
+  const excessReviews = reviewsList && reviewsList.length > 9 ? true : false;
+  const [moreReviews, setMoreReviews] = useState(excessReviews);
 
   if (allReviews === null) {
     getReviews(getWorkspaceId())
@@ -36,19 +37,17 @@ export default ({ reviewsList = null }) => {
 
   // case handling
   if (allReviews === null) {
-    return <div></div>
+    return <></>;
   }
 
   if (allReviews === false) {
-    return <div>There was an error</div>
+    return <></>;
   }
 
   if (allReviews.length === 0) {
     return (
-      <div>
-        <h3>No reviews</h3>
-      </div>
-    )
+      <></>
+    );
   }
 
   // external link if total number if reviews exceeds 9 and 9 reviews are currently being displayed
@@ -66,7 +65,7 @@ export default ({ reviewsList = null }) => {
   // display buttons to show up to 9 reviews and external link if more than 9 reviews exist
   return (
     <>
-      { allReviews.slice(0, show).map(review => <Review review={review} />)}
+      { allReviews.slice(0, show).map((review, i) => <Review key={i} review={review} />)}
       <br/>
 
       { (allReviews.length > show && show < 9) && <LoadMore /> }
