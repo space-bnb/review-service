@@ -1,4 +1,4 @@
-const { upload } = require('./utils/s3upload');
+const { upload, uploadDev } = require('./utils/s3upload');
 
 module.exports = function(grunt) {
 
@@ -10,4 +10,14 @@ module.exports = function(grunt) {
       done();
     }, 5000);
   });
+
+  grunt.registerTask('s3-dev', function() {
+    
+    let done = this.async();
+    uploadDev();
+    setTimeout(function () {
+      done();
+    }, 5000);
+  });
+
 };
