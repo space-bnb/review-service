@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const reviewsAll = 'http://localhost:5002/api/reviews/all/';
-const reviewsInfo = 'http://localhost:5002/api/reviews/info/';
+const reviewsAll = '/api/reviews/all/';
+const reviewsInfo = '/api/reviews/info/';
 
 export const getReviewInfo = (workspaceId) => {
   return axios.get(`${reviewsInfo}${workspaceId}`).catch(err => false);
