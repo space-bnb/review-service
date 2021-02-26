@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+const { useState } = React;
 import { getReviewInfo, getWorkspaceId } from '../actions/index.js';
 
 // displays under title, shows average and number of reviews

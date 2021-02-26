@@ -1,6 +1,7 @@
 const path = require('path');
 const PUB = path.resolve(process.env.PWD, 'client', 'dist');
 const SRC = path.resolve(process.env.PWD, 'client', 'src');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: ['@babel/polyfill', SRC + '/index.jsx'],
@@ -8,6 +9,7 @@ module.exports = {
     path: PUB,
     filename: 'reviews.js'
   },
+  plugins: [new CompressionPlugin()],
   module: {
     rules: [ 
       { 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+const { useState } = React;
 import Review from './Review.jsx';
 import { getReviews, getWorkspaceId } from '../actions/index.js';
 
