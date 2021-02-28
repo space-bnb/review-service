@@ -3,7 +3,7 @@ const fs = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '../', '.env')});
 const AWS = require('aws-sdk');
 
-const bundle = fs.readFileSync(path.join(__dirname, '../', 'client', 'dist', 'reviews.js'));
+const bundle = fs.readFileSync(path.join(__dirname, '../', 'client', 'dist', 'reviews.js.gz'));
 
 AWS.config.getCredentials((err) => {
   if (err) console.log('$$$', err);
@@ -14,7 +14,7 @@ AWS.config.getCredentials((err) => {
 
 const uploadBundle = async () => {
   const jsName = 'reviews.js';
-  const jsObject = {Bucket: process.env.AWS_S3_BUCKET, Key: jsName, Body: bundle.toString()};
+  const jsObject = {Bucket: process.env.AWS_S3_BUCKET, Key: jsName, Body: bundle};
   const s3 = new AWS.S3({apiVersion: '2006-03-01'});
   try {
     await s3.putObject(jsObject).promise();
@@ -26,7 +26,7 @@ const uploadBundle = async () => {
 
 const uploadDev = async () => {
   const jsName = 'dev-reviews.js';
-  const jsObject = {Bucket: process.env.AWS_S3_BUCKET, Key: jsName, Body: bundle.toString()};
+  const jsObject = {Bucket: process.env.AWS_S3_BUCKET, Key: jsName, Body: bundle};
   const s3 = new AWS.S3({apiVersion: '2006-03-01'});
   try {
     await s3.putObject(jsObject).promise();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+const { useState } = React;
 
 // this component will render individual reviews
 export default ({ review }) => {

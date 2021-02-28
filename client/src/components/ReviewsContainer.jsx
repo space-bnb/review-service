@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+const { useState } = React;
 import ReviewsList from './ReviewsList.jsx';
 import Title from './Title.jsx';
 import Stats from './Stats.jsx';

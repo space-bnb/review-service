@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const reviewsAll = '/api/reviews/all/';
 const reviewsInfo = '/api/reviews/info/';
 
