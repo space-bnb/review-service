@@ -37,6 +37,10 @@ const reviewDataSchema = mongoose.Schema({
         type: [exports.ReviewSchema],
         default: [],
     },
+    avg: {
+        type: Number,
+        default: 0,
+    },
 });
 
 reviewDataSchema.pre('save', function (next) {

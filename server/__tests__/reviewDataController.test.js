@@ -10,6 +10,7 @@ beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URI_DEV, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
     });
     server = app.listen(5002, () => console.log('Test server started'));
 });
@@ -51,5 +52,20 @@ describe('POST /api/reviews/info', () => {
         expect(res.body).toHaveProperty('workspaceSlug');
         expect(res.body).toHaveProperty('reviews');
         expect(reviewDataAfterPost.length - reviewDataBeforePost.length).toBe(1);
+    });
+});
+
+describe('DELETE /api/reviews/info/:workspaceId', () => {
+    test('should delete ReviewData record', async () => {
+        const existingRecord = await request(app).get('/api/reviews/info/101');
+        expect(existingRecord.body).toHaveProperty('avg');
+        expect(existingRecord.body).toHaveProperty('reviewCount');
+
+        const res = await request(app).delete('/api/reviews/info/101');
+        expect(res.status).toBe(204);
+
+        const deletedRecord = await request(app).get('/api/reviews/info/101');
+        expect(deletedRecord.status).toBe(404);
+        expect(deletedRecord.body.message).toBe(noReviewData);
     });
 });

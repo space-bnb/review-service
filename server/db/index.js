@@ -5,6 +5,7 @@ exports.connect = async (URI) => {
         const res = await mongoose.connect(URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            useFindAndModify: false,
         });
 
         if (!res) throw new Error();

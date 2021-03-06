@@ -13,17 +13,8 @@ app.use(express.json());
 app.use('/api/reviews/info', reviewInfoRoutes);
 app.get('/api/reviews/all/:workspaceId', reviews);
 app.use('/', express.static(path.join(__dirname, '../', 'client', 'dist')));
-app.use(
-    '/buildings/:workspaceId',
-    express.static(path.join(__dirname, '../', 'client', 'dist')),
-);
+app.use('/buildings/:workspaceId', express.static(path.join(__dirname, '../', 'client', 'dist')));
 app.get('*', notFound);
 app.use(errors);
 
 module.exports = app;
-
-//export server for closing connections, app for accessing middleware and endpoints
-// exports.server = app.listen(PORT, () =>
-//     console.log(`Review service running on ${PORT}`),
-// );
-// exports.app = app;
