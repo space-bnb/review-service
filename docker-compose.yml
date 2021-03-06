@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - "27017:27017"
+    
+  app:
+    container_name: reviews
+    restart: always
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment: 
+      MONGO_URI_DEV: mongodb://mongo:27017/reviews
+    ports:
+      - "5002:5002"
+    depends_on: 
+      - mongo
+
+volumes:
+  mongodb:
