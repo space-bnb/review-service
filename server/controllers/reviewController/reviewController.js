@@ -14,4 +14,15 @@ router.get('/:workspaceId', async (req, res) => {
     }
 });
 
+router.post('/:workspaceId', async (req, res) => {
+    const repo = new ReviewRepository(req.params.workspaceId);
+    try {
+        const success = await repo.create(req.body);
+        return res.status(201).json(success);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: serverError });
+    }
+});
+
 module.exports = router;
