@@ -7,6 +7,8 @@ const reviewInfoRoutes = require('./controllers/reviewDataConroller/reviewDataCo
 const app = express();
 
 app.use(require('cors')());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use('/api/reviews/info', reviewInfoRoutes);
 app.get('/api/reviews/all/:workspaceId', reviews);
