@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../', '.env') });
 const express = require('express');
-const { reviewInfo, reviews, notFound, errors } = require('./controllers/');
+const { reviews, notFound, errors } = require('./controllers/');
 const reviewInfoRoutes = require('./controllers/reviewDataConroller/reviewDataController');
 
 const app = express();
