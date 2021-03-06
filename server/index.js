@@ -1,6 +1,6 @@
 // config env vars
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../', '.env')});
+require('dotenv').config({ path: path.resolve(__dirname, '../', '.env') });
 
 // connect db to production data
 require('./db').connect(process.env.MONGO_URI_PROD);
