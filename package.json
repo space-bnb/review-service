@@ -13,7 +13,7 @@
     "seed": "node server/db/data/seed.js -s",
     "build": "webpack",
     "dev-build": "webpack --watch",
-    "test-server": "jest --detectOpenHandles --testEnvironment=node --verbose ./server/__tests__",
+    "test-server": "npm run seed && jest --detectOpenHandles --testEnvironment=node --verbose ./server/__tests__",
     "test-unit": "jest ./client/spec/unit"
   },
   "dependencies": {

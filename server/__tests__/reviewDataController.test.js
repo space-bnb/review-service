@@ -69,3 +69,31 @@ describe('DELETE /api/reviews/info/:workspaceId', () => {
         expect(deletedRecord.body.message).toBe(noReviewData);
     });
 });
+
+describe('PUT /api/reviews/info/:workspaceId', () => {
+    test('should delete a single review in the array of reviews on ReviewData', async () => {
+        const resPost = await request(app).post('/api/reviews/info');
+        const reviewDataItem = await ReviewData.findById(resPost.body._id);
+        const review = {
+            author: 'Bob',
+            date: new Date(),
+            rating: 2,
+            content: 'content',
+            parentId: reviewDataItem._id,
+        };
+
+        reviewDataItem.reviews.push(review);
+        await reviewDataItem.save();
+
+        const updatedReviewDataItem = await ReviewData.find().limit(1).sort({ $natural: -1 });
+        expect(updatedReviewDataItem[0].reviews).toHaveLength(1);
+
+        const resPut = await request(app)
+            .put('/api/reviews/info/101')
+            .send({ reviewId: updatedReviewDataItem[0].reviews[0]._id })
+            .set('Accept', 'application/json');
+
+        expect(resPut.body.reviews).toHaveLength(0);
+        expect(resPut.status).toBe(200);
+    });
+});
