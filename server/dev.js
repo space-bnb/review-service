@@ -6,4 +6,4 @@ const path = require('path');
 require('./db').connect(process.env.MONGO_URI_DEV);
 
 // // run server on port 5002
-// require('./server');
+require('./server');
