@@ -12,16 +12,17 @@ const checkExists = (item, errMess = 'ID does not exist', status = 404) => {
 };
 
 //GET @  /reviews-api/info/:workspace-id
-exports.reviewInfo = ah(async (req, res, next) => {
-    const { workspaceId } = req.params;
-    const reviewData = await ReviewData.findOne({ workspaceId });
-    checkExists(reviewData, 'The provided id was not found');
-    const { avg, reviewCount } = reviewData;
-    res.status(200).json({ avg, reviewCount });
-});
+// exports.reviewInfo = ah(async (req, res, next) => {
+//     const { workspaceId } = req.params;
+//     const reviewData = await ReviewData.findOne({ workspaceId });
+//     checkExists(reviewData, 'The provided id was not found');
+//     const { avg, reviewCount } = reviewData;
+//     res.status(200).json({ avg, reviewCount });
+// });
 
 //GET @  /reviews-api/all/:workspace-id
 exports.reviews = ah(async (req, res, next) => {
+    console.log('HIT');
     const { workspaceId } = req.params;
     const reviewData = await ReviewData.findOne({ workspaceId });
     checkExists(reviewData, 'ID was not found', 404);
