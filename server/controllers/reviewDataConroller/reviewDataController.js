@@ -10,7 +10,6 @@ router.get('/:workspaceId', async (req, res) => {
 
         return res.status(200).json(reviewData);
     } catch (error) {
-        console.log(error);
         return res.status(500).json({ message: serverError });
     }
 });
@@ -32,6 +31,16 @@ router.delete('/:workspaceId', async (req, res) => {
     try {
         await repo.delete();
         return res.status(204).end();
+    } catch (error) {
+        return res.status(500).json({ message: serverError });
+    }
+});
+
+router.put('/:workspaceId', async (req, res) => {
+    const repo = new ReviewDataRepository(req.params.workspaceId);
+    try {
+        const updatedReviewData = await repo.update(req.body.reviewId);
+        return res.status(200).json(updatedReviewData);
     } catch (error) {
         return res.status(500).json({ message: serverError });
     }

@@ -62,6 +62,15 @@ const makeReviewDataArray = () => {
     return reviewData;
 };
 
+const assignParentIds = async (reviewDatas) => {
+    for (const reviewData of reviewDatas) {
+        for (let i = 0; i < reviewData.reviews.length; i++) {
+            reviewData.reviews[i].parentId = reviewData._id;
+        }
+        await reviewData.save();
+    }
+};
+
 exports.seedReviews = (MONGOURI) => {
     return new Promise(async (resolve, reject) => {
         const db = require(path.resolve(__dirname, '../', 'index.js'));
@@ -72,6 +81,7 @@ exports.seedReviews = (MONGOURI) => {
             console.log('Reviews deleted');
             const reviewData = makeReviewDataArray();
             const res = await ReviewData.create(reviewData);
+            await assignParentIds(res);
             console.log(`${res.length} reviews created`);
             resolve();
         } catch (error) {

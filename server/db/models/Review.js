@@ -19,6 +19,7 @@ exports.ReviewSchema = mongoose.Schema({
         maxlength: 150,
         minlength: 1,
     },
+    parentId: mongoose.Types.ObjectId,
 });
 
 const reviewDataSchema = mongoose.Schema({
@@ -46,7 +47,10 @@ const reviewDataSchema = mongoose.Schema({
 reviewDataSchema.pre('save', function (next) {
     this.total = this.reviews.reduce((total, { rating }) => total + rating, 0);
     this.reviewCount = this.reviews.length;
-    this.avg = (this.total / this.reviewCount).toFixed(1);
+
+    if (this.reviewCount > 0) this.avg = (this.total / this.reviewCount).toFixed(1);
+    else this.avg = 0;
+
     next();
 });
 
