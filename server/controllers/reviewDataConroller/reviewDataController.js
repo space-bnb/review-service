@@ -5,7 +5,7 @@ const { noReviewData, reviewDataNotCreated, serverError } = require('../../const
 router.get('/:workspaceId', async (req, res) => {
     const repo = new ReviewDataRepository(req.params.workspaceId);
     try {
-        const reviewData = await repo.getById();
+        const reviewData = await repo.getByIdAndShape();
         if (!reviewData) return res.status(404).json({ message: noReviewData });
 
         return res.status(200).json(reviewData);

@@ -6,6 +6,10 @@ class ReviewDataRepository {
     }
 
     getById() {
+        if (this.workspaceId != null) return ReviewData.findOne({ workspaceId: this.workspaceId });
+    }
+
+    getByIdAndShape() {
         if (this.workspaceId != null)
             return ReviewData.findOne({ workspaceId: this.workspaceId }).select({ _id: 0, avg: 1, reviewCount: 1 });
     }
@@ -23,7 +27,7 @@ class ReviewDataRepository {
     }
 
     async update(reviewId) {
-        const reviewData = await ReviewData.findOne({ workspaceId: this.workspaceId });
+        const reviewData = await this.getById();
         const updatedReviews = reviewData.reviews.filter((review) => String(reviewId) !== String(review._id));
 
         reviewData.reviews = updatedReviews;

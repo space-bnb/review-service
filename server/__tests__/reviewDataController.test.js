@@ -12,7 +12,7 @@ beforeAll(async () => {
         useUnifiedTopology: true,
         useFindAndModify: false,
     });
-    server = app.listen(5002, () => console.log('Test server started'));
+    server = app.listen(5003, () => console.log('Test server started'));
 });
 
 afterAll(async () => {
