@@ -1,8 +1,7 @@
 const { ReviewData } = require('../db/models/Review');
 
 //asyncHandler
-const ah = (fn) => (req, res, next) =>
-    Promise.resolve(fn(req, res, next)).catch(next);
+const ah = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
 const checkExists = (item, errMess = 'ID does not exist', status = 404) => {
     if (!item) {
@@ -31,8 +30,7 @@ exports.reviews = ah(async (req, res, next) => {
 });
 
 // error for non existing paths
-exports.notFound = (req, res) =>
-    res.status(404).json({ status: 404, message: 'Path does not exist' });
+exports.notFound = (req, res) => res.status(404).json({ status: 404, message: 'Path does not exist' });
 
 // error handling endpoint
 exports.errors = (err, req, res, next) =>
