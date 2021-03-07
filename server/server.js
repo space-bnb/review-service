@@ -5,7 +5,7 @@ const reviewRoutes = require('./controllers/reviewController/reviewController');
 
 const app = express();
 
-app.use(require('cors')());
+app.use(require('cors')()); // likely won't need this
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
