@@ -1,7 +1,3 @@
-const path = require('path');
-require('dotenv').config({
-    path: path.join(__dirname, '../', '../', '../', '.env'),
-});
 const { ReviewData } = require('../models/Review');
 
 const lorem = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui totam quasi tenetur eaque libero, magnam iure sint repellendus similique vero error id aspernatur, omnis ad asperiores placeat natus. Praesentium, velit.'
@@ -47,11 +43,7 @@ const reviewDataGenerator = (idNum, limit) => {
     let reviews = reviewGenerator(numberOfReviews);
     let workspaceSlug = `workspace-${idNum}`;
     let workspaceId = idNum;
-    return {
-        workspaceSlug,
-        workspaceId,
-        reviews,
-    };
+    return { workspaceSlug, workspaceId, reviews };
 };
 
 const makeReviewDataArray = () => {
@@ -71,10 +63,9 @@ const assignParentIds = async (reviewDatas) => {
     }
 };
 
-exports.seedReviews = (MONGOURI) => {
+exports.seedReviews = () => {
     return new Promise(async (resolve, reject) => {
-        const db = require(path.resolve(__dirname, '../', 'index.js'));
-        await db.connect(MONGOURI);
+        const db = require('../index');
         console.log('seeder connected to db');
         try {
             await ReviewData.deleteMany({});
@@ -92,10 +83,9 @@ exports.seedReviews = (MONGOURI) => {
     });
 };
 
-exports.deleteReviews = (MONGOURI) => {
+exports.deleteReviews = () => {
     return new Promise(async (resolve, reject) => {
-        const db = require(path.resolve(__dirname, '../', 'index.js'));
-        db.connect(MONGOURI);
+        const db = require('../index');
         try {
             await ReviewData.deleteMany({});
             console.log('Reviews have been deleted');
