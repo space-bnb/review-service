@@ -67,8 +67,6 @@ describe('/api/reviews/all/:workspaceId', () => {
 
         const updatedReviewData = await ReviewData.findOne({ workspaceId: 1 });
         const updatedReview = updatedReviewData.reviews[updatedReviewData.reviews.length - 1];
-        console.log(updatedReview);
-        console.log(reviewData.reviews[reviewData.reviews.length - 1]);
 
         expect(updatedReview._id).toEqual(review._id);
         expect(updatedReview.author).toBe(review.author);
@@ -76,13 +74,16 @@ describe('/api/reviews/all/:workspaceId', () => {
         expect(updatedReview.rating).toBe(review.rating);
         expect(updatedReview.content).toBe(review.content);
         expect(String(updatedReview.parentId)).toBe(review.parentId);
-        // expect(updatedReview).toEqual({
-        //     _id: reviewData.reviews[reviewData.reviews.length - 1]._id,
-        //     author: 'Dane Murphy',
-        //     date: reviewData.reviews[reviewData.reviews.length - 1].date,
-        //     rating: 1,
-        //     content: 'This is a new review being added to a ReviewData',
-        //     parentId: mongoose.Types.ObjectId('6043d6cc8b822c00a5ea3342'),
-        // });
+    });
+
+    test('DELETE should delete a single review', async () => {
+        const reviewData = await ReviewData.findOne({ workspaceId: 1 });
+        const reviewId = reviewData.reviews[reviewData.reviews.length - 1]._id;
+
+        const res = await request(app).delete('/api/reviews/all/1').send({ reviewId });
+        const reviewDataAfterDelete = await ReviewData.findOne({ workspaceId: 1 });
+
+        expect(res.status).toBe(204);
+        expect(reviewData.reviews.length - reviewDataAfterDelete.reviews.length).toBe(1);
     });
 });
