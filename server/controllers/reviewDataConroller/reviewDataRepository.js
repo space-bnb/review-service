@@ -25,14 +25,6 @@ class ReviewDataRepository {
         const workspaceId = latestRecord[0].workspaceId + 1;
         return ReviewData.create({ workspaceId, workspaceSlug: `workspace-${workspaceId}` });
     }
-
-    async update(reviewId) {
-        const reviewData = await this.getById();
-        const updatedReviews = reviewData.reviews.filter((review) => String(reviewId) !== String(review._id));
-
-        reviewData.reviews = updatedReviews;
-        return reviewData.save();
-    }
 }
 
 module.exports = ReviewDataRepository;

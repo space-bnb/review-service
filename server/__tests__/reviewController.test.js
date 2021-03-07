@@ -1,6 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../server');
+const { ReviewData } = require('../db/models/Review');
 
 let server;
 
@@ -47,5 +48,41 @@ describe('/api/reviews/all/:workspaceId', () => {
         expect(res.body).toHaveProperty('rating');
         expect(res.body).toHaveProperty('content');
         expect(res.body).toHaveProperty('parentId');
+    });
+
+    test('PUT should update an existing review record', async () => {
+        const reviewData = await ReviewData.findOne({ workspaceId: 1 });
+
+        const review = {
+            _id: reviewData.reviews[reviewData.reviews.length - 1]._id,
+            author: 'Dane Murphy',
+            date: '2021-03-06T19:23:56.344Z',
+            rating: 1,
+            content: 'This is a new review being updated',
+            parentId: '6043d6cc8b822c00a5ea3342',
+        };
+
+        expect(reviewData.reviews[reviewData.reviews.length - 1].rating).not.toBe(1);
+        await request(app).put('/api/reviews/all/1').send(review);
+
+        const updatedReviewData = await ReviewData.findOne({ workspaceId: 1 });
+        const updatedReview = updatedReviewData.reviews[updatedReviewData.reviews.length - 1];
+        console.log(updatedReview);
+        console.log(reviewData.reviews[reviewData.reviews.length - 1]);
+
+        expect(updatedReview._id).toEqual(review._id);
+        expect(updatedReview.author).toBe(review.author);
+        expect(updatedReview.date.toISOString()).toBe(review.date);
+        expect(updatedReview.rating).toBe(review.rating);
+        expect(updatedReview.content).toBe(review.content);
+        expect(String(updatedReview.parentId)).toBe(review.parentId);
+        // expect(updatedReview).toEqual({
+        //     _id: reviewData.reviews[reviewData.reviews.length - 1]._id,
+        //     author: 'Dane Murphy',
+        //     date: reviewData.reviews[reviewData.reviews.length - 1].date,
+        //     rating: 1,
+        //     content: 'This is a new review being added to a ReviewData',
+        //     parentId: mongoose.Types.ObjectId('6043d6cc8b822c00a5ea3342'),
+        // });
     });
 });
