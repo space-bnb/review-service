@@ -1,9 +1,8 @@
-// config env vars
-const path = require('path');
-// require('dotenv').config({ path: path.resolve(__dirname, '../', '.env')});
-
-// connect db to dev data
+const app = require('./server');
 require('./db').connect(process.env.MONGO_URI_DEV);
 
-// // run server on port 5002
-require('./server');
+const PORT = process.env.PORT || 5002;
+
+module.exports = app.listen(PORT, () =>
+    console.log(`Review service running on ${PORT}`),
+);
