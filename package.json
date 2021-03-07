@@ -8,7 +8,7 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "dev": "npm run seed && nodemon server/dev.js",
+    "dev": "npm run seed && nodemon server/serverStart.js",
     "setup": "npm install && npm run seed && npm run build",
     "seed": "node server/db/data/seed.js -s",
     "build": "webpack",

@@ -20,6 +20,5 @@ afterAll(async () => {
 
 test('seed script should insert 100 records in the database (for now)', async () => {
     const AllReviewData = await ReviewData.find();
-
     expect(AllReviewData.length).toBe(100);
 });

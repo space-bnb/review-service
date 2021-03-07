@@ -1,5 +1,5 @@
-const path = require('path');
 const express = require('express');
+const path = require('path');
 const reviewInfoRoutes = require('./controllers/reviewDataConroller/reviewDataController');
 const reviewRoutes = require('./controllers/reviewController/reviewController');
 
