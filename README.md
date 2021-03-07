@@ -1,43 +1,9 @@
 # Review Service
 
-> Provide review retrieval service for SpaceWork.com item Workspace item page.
+This service is setup to run in Docker containers. To run locally, follow instructions below.
 
-## Related Projects
-
-  - https://github.com/space-work/nearby-workspaces
-  - https://github.com/space-work/amenities-service
-  - https://github.com/space-work/contact-widget-service
-  - https://github.com/space-work/workspace-service
-  - https://github.com/space-work/workspace-description-service
-  - https://github.com/space-work/photos-service
-  - https://github.com/space-work/location-service
-
-
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-
-## Usage
-
-> Some usage instructions
-
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
-
+### Instructions For Running Locally
+1. Install Docker on your local machine https://docs.docker.com/get-docker/
+2. Install Docker Compose should your machine require extra steps https://docs.docker.com/compose/install/
+3. Clone down repository: git clone https://github.com/sdc-perlman/review-service.git
+4. From the root directory of the repository in the terminal, run "docker-compose up"
