@@ -2,14 +2,20 @@
 
 This service is setup to run in Docker containers. To run locally, follow instructions below.
 
-### Instructions For Running Locally
+## Instructions For Running Locally
 1. Install Docker on your local machine https://docs.docker.com/get-docker/
 2. Install Docker Compose should your machine require extra steps https://docs.docker.com/compose/install/
 3. Clone down repository: "git clone https://github.com/sdc-perlman/review-service.git"
-4. From the root directory of the repository in the terminal, run "docker-compose up"
+4. From the root directory of the repository in the terminal, run "docker-compose up --build app mongo"
+
+```console
+docker-compose up -- build app mongo
+```
+
+By specifiying the service, we are choosing which image to create containers of. If we only ran "docker-compose up", docker will assume that we want containers to run for all images
 
 
-### Seeding the Database
+## Seeding the Database
 1. Run the command "npm run data-generate"
 2. This will start the process of generating fake data, notice in the "server/dataGeneration/generateDump.js" file, that there is an
 	"iterations" variable which detemines how much data will be generated. It is set to 19 to create 10,000,000 record. If running this
@@ -23,5 +29,18 @@ This service is setup to run in Docker containers. To run locally, follow instru
 	3. I personally recommend trying the first option first
 4. Once the "dump.sql" file is created, from the root directly of the project in your terminal, run the command "docker-compose --build 	up pg". This will read the "pg" service in the "docker-compose.yaml" file and only build that image and run a container, whlie 			ignoring the other services. Once the image is build, the Postgres container will see the "dump.sql" file and begin copying the 		information to the database. This process should take very little time if you set the number of iterations to 0 or 1 earlier.
 	You will notice the creation of another folder called "pg" in the root directory of the project, which is just a volume to persist the data that was seeded so that you do not need to seed the database when stopping and restarting a Postgres container.
+
+### Option 1
+```console
+cd server/dumps
+chmod 777 catScript.sh
+npm run shell
+```
+
+### Option 2
+From the rootdir, paste the following below. This command will vary depending on how many iterations you choose to run in "server/dataGeneration/generateDump.js"
+```console
+cat server/dumps/head.sql server/dumps/copySpaces.sql server/dumps/spacesBody0.sql server/dumps/spacesBody1.sql server/dumps/copyReviews.sql server/dumps/reviewsBody0.sql server/dumps/reviewsBody1.sql server/dumps/copyCalculations.sql server/dumps/calculationsBody0.sql server/dumps/calculationsBody1.sql server/dumps/foot.sql > server/dumps/dump.sql
+```
 
 NOTE: Postgres has the "out-of-box" capability of generating a dump.sql file to back up existing databases. The entire strategy of this data generation script was to create a file using the same syntax as a native pg_dump file, as these scripts follow several recommendations from the Postgres documentation on speeding up the process of seeding large datasets. More can be read [here](https://www.postgresql.org/docs/9.1/populate.html)
