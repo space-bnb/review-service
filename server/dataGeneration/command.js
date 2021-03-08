@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = function (j) {
     let command = 'cat head.sql copySpaces.sql ';
 
@@ -20,4 +23,8 @@ module.exports = function (j) {
     command += 'foot.sql > dump.sql';
 
     console.log(command);
+
+    fs.writeFile(path.join(__dirname, '..', 'dumps', 'catScript.sh'), command, (err) => {
+        if (err) throw err;
+    });
 };

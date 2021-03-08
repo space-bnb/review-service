@@ -3,7 +3,7 @@ const path = require('path');
 const faker = require('faker');
 const command = require('./command');
 
-const iterations = 19;
+const iterations = 1;
 
 for (let k = 0; k <= iterations; k++) {
     let query = '';
