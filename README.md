@@ -43,4 +43,24 @@ From the rootdir, paste the command that printed to your terminal. This command 
 cat server/dumps/head.sql server/dumps/copySpaces.sql server/dumps/spacesBody0.sql server/dumps/spacesBody1.sql server/dumps/copyReviews.sql server/dumps/reviewsBody0.sql server/dumps/reviewsBody1.sql server/dumps/copyCalculations.sql server/dumps/calculationsBody0.sql server/dumps/calculationsBody1.sql server/dumps/foot.sql > server/dumps/dump.sql
 ```
 
+### Running the Postgres container
+From the rootdir, enter in your terminal
+```console
+docker-compose --build up pg
+```
+
+NOTE: The initial copying of the dum.sql may take a little time, but all subsequent containers will be instant. To stop and delete the container, enter:
+```console
+docker-compose down
+```
+
 NOTE: Postgres has the "out-of-box" capability of generating a dump.sql file to back up existing databases. The entire strategy of this data generation script was to create a file using the same syntax as a native pg_dump file, as these scripts follow several recommendations from the Postgres documentation on speeding up the process of seeding large datasets. More can be read [here](https://www.postgresql.org/docs/9.1/populate.html)
+
+##PgAdmin
+In the docker-compose.yml file, you will see that I have also included a service to run a container for PgAdmin (the Postgres GUI). To see it in action, run the following command:
+```console
+docker-compose up --build pg pgadmin
+```
+
+In the browser, go to http://localhost:8080
+[create-connection](https://drive.google.com/file/d/1T4KW0DnBPvKNdHYrdSi8Un8VAYFJ55yn/view?usp=sharing)
