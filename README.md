@@ -63,4 +63,5 @@ docker-compose up --build pg pgadmin
 ```
 
 In the browser, go to http://localhost:8080
-![create-connection](https://drive.google.com/file/d/1T4KW0DnBPvKNdHYrdSi8Un8VAYFJ55yn/view?usp=sharing)
+
+![create-connection](https://sdc-perlman.s3.amazonaws.com/pgadmin/createConnection.png)
