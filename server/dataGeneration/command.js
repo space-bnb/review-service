@@ -2,25 +2,25 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = function (j) {
-    let command = 'cat head.sql copySpaces.sql ';
+    let command = 'cat server/dumps/head.sql server/dumps/copySpaces.sql ';
 
     for (let i = 0; i <= j; i++) {
-        command += `spacesBody${i}.sql `;
+        command += `server/dumps/spacesBody${i}.sql `;
     }
 
-    command += 'copyReviews.sql ';
+    command += 'server/dumps/copyReviews.sql ';
 
     for (let i = 0; i <= j; i++) {
-        command += `reviewsBody${i}.sql `;
+        command += `server/dumps/reviewsBody${i}.sql `;
     }
 
-    command += 'copyCalculations.sql ';
+    command += 'server/dumps/copyCalculations.sql ';
 
     for (let i = 0; i <= j; i++) {
-        command += `calculationsBody${i}.sql `;
+        command += `server/dumps/calculationsBody${i}.sql `;
     }
 
-    command += 'foot.sql > dump.sql';
+    command += 'server/dumps/foot.sql > server/dumps/dump.sql';
 
     console.log(command);
 
