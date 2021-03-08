@@ -62,13 +62,19 @@ In the docker-compose.yml file, you will see that I have also included a service
 docker-compose up --build pg pgadmin
 ```
 
-In the browser, go to http://localhost:8080
+In the browser, go to http://localhost:8080, and login with 
+
+email: user@mail.com
+password: password
 
 1. Create a server
+
 ![create-server](https://sdc-perlman.s3.amazonaws.com/pgadmin/createServer.png)
 
 2. Create a connection using the link named in the docker-compose.yml file
+
 ![create-connection](https://sdc-perlman.s3.amazonaws.com/pgadmin/createConnection.png)
 
 3. You should now be able to see the table and view the data
+
 ![see-tables](https://sdc-perlman.s3.amazonaws.com/pgadmin/viewTables.png)
