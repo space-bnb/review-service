@@ -6,7 +6,7 @@ COPY ./package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY ./server /app/server
 
 EXPOSE 5002
 

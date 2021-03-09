@@ -36,14 +36,4 @@ router.delete('/:workspaceId', async (req, res) => {
     }
 });
 
-router.put('/:workspaceId', async (req, res) => {
-    const repo = new ReviewDataRepository(req.params.workspaceId);
-    try {
-        const updatedReviewData = await repo.update(req.body.reviewId);
-        return res.status(200).json(updatedReviewData);
-    } catch (error) {
-        return res.status(500).json({ message: serverError });
-    }
-});
-
 module.exports = router;

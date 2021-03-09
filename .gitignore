@@ -29,3 +29,9 @@ build/
 client/dist/reviews.js
 client/dist/reviews.js.LICENSE.txt
 
+server/dumps/*
+!server/dumps/.gitkeep
+!server/dumps/catScript.sh
+!server/dumps/execCat.js
+
+pg/

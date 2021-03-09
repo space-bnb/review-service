@@ -1,0 +1,1 @@
+cat server/dumps/head.sql server/dumps/copySpaces.sql server/dumps/spacesBody0.sql server/dumps/spacesBody1.sql server/dumps/copyReviews.sql server/dumps/reviewsBody0.sql server/dumps/reviewsBody1.sql server/dumps/copyCalculations.sql server/dumps/calculationsBody0.sql server/dumps/calculationsBody1.sql server/dumps/foot.sql > server/dumps/dump.sql
