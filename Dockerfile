@@ -2,9 +2,10 @@ FROM node:15
 
 WORKDIR /app
 
-COPY ./package*.json ./
+COPY ./package.json ./
+COPY ./package-lock.json ./
 
-RUN npm install
+RUN npm install --production
 
 COPY ./server /app/server
 
