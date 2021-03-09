@@ -2,10 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const faker = require('faker');
 const command = require('./command');
+const uuid = require('uuid').v4;
 
-const iterations = 19;
+const iterations = 0;
 
 for (let k = 0; k <= iterations; k++) {
+    let authorsQuery = '';
     let reviewsQuery = '';
 
     for (let i = 1 + k * 500000; i <= 500000 + k * 500000; i++) {
@@ -27,14 +29,14 @@ for (let k = 0; k <= iterations; k++) {
             if (j === numberOfReviews && i === 500000 + iterations * 500000) {
                 reviewsQuery += `
 ${first} ${last}	${faker.date
-                    .between(new Date('1970-01-01'), new Date())
+                    .between(new Date('2021-01-01'), new Date())
                     .toISOString()}	${rating}	${faker.lorem.sentence()}	${i}
 \\.
 `;
             } else {
                 reviewsQuery += `
 ${first} ${last}	${faker.date
-                    .between(new Date('1970-01-01'), new Date())
+                    .between(new Date('2021-04-01'), new Date())
                     .toISOString()}	${rating}	${faker.lorem.sentence()}	${i}`;
             }
         }
