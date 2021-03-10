@@ -8,6 +8,12 @@ module.exports = function (j) {
         command += `server/dumps/reviewsBody${i}.sql `;
     }
 
+    command += 'server/dumps/copyAuthors.sql ';
+
+    for (let i = 0; i <= j; i++) {
+        command += `server/dumps/authorsBody${i}.sql `;
+    }
+
     command += 'server/dumps/foot.sql > server/dumps/dump.sql';
 
     console.log(command);

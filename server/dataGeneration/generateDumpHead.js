@@ -21,7 +21,9 @@ SET default_table_access_method = heap;
 CREATE TABLE public.authors (
     id uuid NOT NULL,
     first_name varchar(255),
-    last_name varchar(255)
+    last_name varchar(255),
+    email varchar(255),
+    password varchar(255)
 );
 
 ALTER TABLE public.authors OWNER TO "user";
@@ -32,7 +34,7 @@ CREATE TABLE public.reviews (
     date date,
     rating integer,
     content character varying(255),
-    space integer
+    space integer,
     author_id uuid
 );
 

@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const query = `
-SELECT pg_catalog.setval('public.reviews_id_seq', 5, true);
+ALTER TABLE ONLY public.authors
+    ADD CONSTRAINT authors_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY public.reviews
     ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
