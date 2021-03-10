@@ -31,7 +31,7 @@ Author.init(
         sequelize,
         timestamps: false,
         modelName: 'author',
-        tableName: 'reviews',
+        tableName: 'authors',
     },
 );
 

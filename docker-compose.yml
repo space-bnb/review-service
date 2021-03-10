@@ -25,7 +25,7 @@ services:
     ports:
       - "5002:5002"
     depends_on: 
-      - mongo
+      - pg
 
   pg:
     image: postgres
@@ -54,6 +54,9 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     links:
       - "pg:pgsql-server"
+    depends_on: 
+      - app
+      - pg
 
 volumes:
   pgadmin-data:

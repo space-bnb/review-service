@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/api/reviews/info', reviewInfoRoutes);
-// app.use('/api/reviews/all', reviewRoutes);
+app.use('/api/reviews/all', reviewRoutes);
 app.use('/', express.static(path.join(__dirname, '../', 'client', 'dist')));
 app.use('/buildings/:workspaceId', express.static(path.join(__dirname, '../', 'client', 'dist')));
 
