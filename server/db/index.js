@@ -1,4 +1,11 @@
-const mongoose = require('mongoose');
-const options = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
+// require('./relationships');
+const { Sequelize } = require('sequelize');
 
-module.exports = mongoose.connect(process.env.MONGO_URI_DEV, options);
+const sequelize = new Sequelize(process.env.PG_DB, process.env.PG_USER, process.env.PG_PASSWORD, {
+    dialect: 'postgres',
+    host: process.env.HOST,
+});
+
+sequelize.authenticate();
+
+module.exports = sequelize;
