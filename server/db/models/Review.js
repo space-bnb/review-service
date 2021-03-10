@@ -1,12 +1,12 @@
 const sequelize = require('../index');
 const { Model, DataTypes } = require('sequelize');
+
 class Review extends Model {}
 
 Review.init(
     {
         id: {
             type: DataTypes.UUID,
-            allowNull: false,
             primaryKey: true,
         },
         date: {
@@ -23,6 +23,14 @@ Review.init(
         },
         date: {
             type: DataTypes.DATE,
+            allowNull: false,
+        },
+        content: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        space: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         author_id: {
