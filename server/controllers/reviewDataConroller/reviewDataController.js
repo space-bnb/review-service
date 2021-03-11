@@ -8,7 +8,7 @@ router.get('/:space', async (req, res) => {
         const reviewData = await repo.getBySpace();
         if (!reviewData) return res.status(404).json({ message: noReviewData });
 
-        return res.status(200).json(reviewData[0]);
+        return res.status(200).json(reviewData);
     } catch (error) {
         return res.status(500).json({ message: serverError });
     }

@@ -1,11 +1,11 @@
 const ReviewDataRepository = require('../reviewDataConroller/reviewDataRepository');
 const Review = require('../../db/models/Review');
-const Author = require('../../db/models/Author');
+const User = require('../../db/models/User');
 const uuid = require('uuid').v4;
 
 class ReviewRepository {
     constructor(space) {
-        this.space = space != null ? space : null;
+        this.space = space;
         this.reviewDataRepository = new ReviewDataRepository(this.space);
     }
 
@@ -15,22 +15,22 @@ class ReviewRepository {
                 where: { space: this.space },
                 attributes: ['rating', 'content', 'date'],
                 include: {
-                    model: Author,
+                    model: User,
                     attributes: ['first_name', 'last_name'],
                 },
             });
     }
 
     create(review) {
-        if (this.space != null) return Review.create({ id: uuid(), ...review, space: this.space });
+        return Review.create({ id: uuid(), ...review, space: this.space });
     }
 
     update(updatedReview) {
-        return Review.update(updatedReview, { where: { id: updatedReview.id } });
+        return Review.update(updatedReview, { where: { id: updatedReview.id, user_id: updatedReview.user_id } });
     }
 
     delete(reviewId) {
-        return Review.destroy({ where: { id: reviewId } });
+        return Review.destroy({ where: { id: reviewId.id, user_id: reviewId.user_id } });
     }
 }
 

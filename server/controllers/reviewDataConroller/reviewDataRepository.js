@@ -3,12 +3,12 @@ const { fn, col } = require('sequelize');
 
 class ReviewDataRepository {
     constructor(space) {
-        this.space = space != null ? space : null;
+        this.space = space;
     }
 
     getBySpace() {
         if (this.space != null)
-            return Review.findAll({
+            return Review.findOne({
                 where: { space: this.space },
                 attributes: [
                     [fn('count', col('id')), 'reviewCount'],

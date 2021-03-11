@@ -1,4 +1,3 @@
-// require('./relationships');
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.PG_DB, process.env.PG_USER, process.env.PG_PASSWORD, {

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const mapAuthorToReview = require('../../middleware/mapAuthorToReview');
+const mapUserToReview = require('../../middleware/mapUserToReview');
 const ReviewRepository = require('./reviewRepository');
 const { noReviews, serverError } = require('../../constants/httpResponses');
 
@@ -16,7 +16,7 @@ router.get('/:space', async (req, res) => {
     }
 });
 
-router.post('/:space', mapAuthorToReview, async (req, res) => {
+router.post('/:space', mapUserToReview, async (req, res) => {
     const repo = new ReviewRepository(req.params.space);
     try {
         const newReview = await repo.create(req.body);
@@ -27,7 +27,7 @@ router.post('/:space', mapAuthorToReview, async (req, res) => {
     }
 });
 
-router.put('/:space', async (req, res) => {
+router.put('/:space', mapUserToReview, async (req, res) => {
     const repo = new ReviewRepository(req.params.space);
     try {
         await repo.update(req.body);
@@ -37,10 +37,10 @@ router.put('/:space', async (req, res) => {
     }
 });
 
-router.delete('/:space', async (req, res) => {
+router.delete('/:space', mapUserToReview, async (req, res) => {
     const repo = new ReviewRepository(req.params.space);
     try {
-        await repo.delete(req.body.id);
+        await repo.delete(req.body);
         return res.sendStatus(204);
     } catch (error) {
         return res.status(500).json({ message: serverError });

@@ -33,10 +33,10 @@ Review.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        author_id: {
+        user_id: {
             type: DataTypes.UUID,
             references: {
-                model: 'authors',
+                model: 'users',
                 key: 'id',
             },
         },
