@@ -1,7 +1,6 @@
 const ReviewDataRepository = require('../reviewDataConroller/reviewDataRepository');
 const Review = require('../../db/models/Review');
 const User = require('../../db/models/User');
-const uuid = require('uuid').v4;
 
 class ReviewRepository {
     constructor(space) {
@@ -23,7 +22,7 @@ class ReviewRepository {
     }
 
     create(review) {
-        return Review.create({ id: uuid(), ...review, space: this.space });
+        return Review.create({ ...review, space: this.space });
     }
 
     update(updatedReview) {
