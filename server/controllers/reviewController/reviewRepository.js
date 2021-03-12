@@ -1,44 +1,36 @@
 const ReviewDataRepository = require('../reviewDataConroller/reviewDataRepository');
-const { ReviewData } = require('../../db/models/Review');
+const Review = require('../../db/models/Review');
+const User = require('../../db/models/User');
+const uuid = require('uuid').v4;
 
 class ReviewRepository {
-    constructor(workspaceId) {
-        this.workspaceId = workspaceId != null ? workspaceId : null;
-        this.reviewDataRepository = new ReviewDataRepository(this.workspaceId);
+    constructor(space) {
+        this.space = space;
+        this.reviewDataRepository = new ReviewDataRepository(this.space);
     }
 
-    async get() {
-        if (this.workspaceId != null) {
-            const reviewData = await ReviewData.findOne({ workspaceId: this.workspaceId });
-            return reviewData.reviews;
-        }
+    get() {
+        if (this.space != null)
+            return Review.findAll({
+                where: { space: this.space },
+                attributes: ['rating', 'content', 'date'],
+                include: {
+                    model: User,
+                    attributes: ['first_name', 'last_name'],
+                },
+            });
     }
 
-    async create(review) {
-        if (this.workspaceId != null) {
-            const reviewData = await ReviewData.findOne({ workspaceId: this.workspaceId });
-            reviewData.reviews.push(review);
-
-            const updatedReviewData = await reviewData.save();
-            return updatedReviewData.reviews[updatedReviewData.reviews.length - 1];
-        }
+    create(review) {
+        return Review.create({ id: uuid(), ...review, space: this.space });
     }
 
-    async update(updatedReview) {
-        const reviewData = await this.reviewDataRepository.getById();
-        const reviewIndex = reviewData.reviews.findIndex((review) => String(review._id) === String(updatedReview._id));
-
-        reviewData.reviews[reviewIndex] = updatedReview;
-        const updatedReviewData = await reviewData.save();
-        return updatedReviewData.reviews[reviewIndex];
+    update(updatedReview) {
+        return Review.update(updatedReview, { where: { id: updatedReview.id, user_id: updatedReview.user_id } });
     }
 
-    async delete(reviewId) {
-        const reviewData = await this.reviewDataRepository.getById();
-        const updatedReviews = reviewData.reviews.filter((review) => String(reviewId) !== String(review._id));
-
-        reviewData.reviews = updatedReviews;
-        return reviewData.save();
+    delete(reviewId) {
+        return Review.destroy({ where: { id: reviewId.id, user_id: reviewId.user_id } });
     }
 }
 

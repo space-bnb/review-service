@@ -1,57 +1,52 @@
-const mongoose = require('mongoose');
+const sequelize = require('../index');
+const { Model, DataTypes } = require('sequelize');
 
-exports.ReviewSchema = mongoose.Schema({
-    author: {
-        type: String,
-        require: true,
-        minlength: 3,
-        maxlength: 40,
-    },
-    date: Date,
-    rating: {
-        type: Number,
-        max: 5,
-        min: 1,
-        required: true,
-    },
-    content: {
-        type: String,
-        maxlength: 150,
-        minlength: 1,
-    },
-    parentId: mongoose.Types.ObjectId,
-});
+class Review extends Model {}
 
-const reviewDataSchema = mongoose.Schema({
-    workspaceSlug: String,
-    workspaceId: Number,
-    total: {
-        type: Number,
-        default: 0,
+Review.init(
+    {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+        },
+        date: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        rating: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                min: 1,
+                max: 5,
+            },
+        },
+        date: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        content: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        space: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        user_id: {
+            type: DataTypes.UUID,
+            references: {
+                model: 'users',
+                key: 'id',
+            },
+        },
     },
-    avg: Number,
-    reviewCount: {
-        type: Number,
-        default: 0,
+    {
+        sequelize,
+        timestamps: false,
+        modelName: 'review',
+        tableName: 'reviews',
     },
-    reviews: {
-        type: [exports.ReviewSchema],
-        default: [],
-    },
-    avg: {
-        type: Number,
-        default: 0,
-    },
-});
+);
 
-reviewDataSchema.pre('save', function (next) {
-    this.total = this.reviews.reduce((total, { rating }) => total + rating, 0);
-    this.reviewCount = this.reviews.length;
-
-    if (this.reviewCount > 0) this.avg = (this.total / this.reviewCount).toFixed(1);
-    else this.avg = 0;
-
-    next();
-});
-
-exports.ReviewData = mongoose.model('ReviewData', reviewDataSchema);
+module.exports = Review;

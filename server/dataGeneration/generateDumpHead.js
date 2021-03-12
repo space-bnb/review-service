@@ -18,7 +18,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 
-CREATE TABLE public.authors (
+CREATE TABLE public.users (
     id uuid NOT NULL,
     first_name varchar(255),
     last_name varchar(255),
@@ -26,7 +26,7 @@ CREATE TABLE public.authors (
     password varchar(255)
 );
 
-ALTER TABLE public.authors OWNER TO "user";
+ALTER TABLE public.users OWNER TO "user";
 
 
 CREATE TABLE public.reviews (
@@ -35,7 +35,7 @@ CREATE TABLE public.reviews (
     rating integer,
     content character varying(255),
     space integer,
-    author_id uuid
+    user_id uuid
 );
 
 

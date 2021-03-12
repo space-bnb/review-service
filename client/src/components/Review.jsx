@@ -32,7 +32,7 @@ export default ({ review }) => {
 
   return (
     <div className="reviews-section-card">
-      <p className="reviews-section-author">{ review.author }</p>
+      <p className="reviews-section-author">{ `${review.author.first_name} ${review.author.last_name}` }</p>
       <p className="reviews-section-date">{ date || '' } </p>
       <Stars />
       <div className="reviews-section-content">

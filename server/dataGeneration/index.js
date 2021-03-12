@@ -1,5 +1,5 @@
 require('./generateDumpHead');
 require('./generateCopyReviews');
-require('./generateCopyAuthors');
+require('./generateCopyUsers');
 require('./generateDump');
 require('./generateDumpFoot');

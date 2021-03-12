@@ -18,10 +18,14 @@ services:
       - ./server/:/app/server
     environment: 
       MONGO_URI_DEV: mongodb://mongo:27017/reviews
+      PG_DB: reviews
+      PG_USER: user
+      PG_PASSWORD: password
+      HOST: pg
     ports:
       - "5002:5002"
     depends_on: 
-      - mongo
+      - pg
 
   pg:
     image: postgres
@@ -50,6 +54,9 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     links:
       - "pg:pgsql-server"
+    depends_on: 
+      - app
+      - pg
 
 volumes:
   pgadmin-data:
