@@ -5,7 +5,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
     entry: ['@babel/polyfill', SRC + '/index.jsx'],
-    mode: 'development',
+    mode: 'production',
     output: {
         path: PUB,
         filename: 'reviews.js',
