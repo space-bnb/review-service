@@ -80,6 +80,13 @@ describe('/api/reviews/all/:space', () => {
         expect(res.body.error[0].msg).toBe(validationResponses.review);
     });
 
+    test('PUT should NOT updated with missing id', async () => {
+        const updatedReview = { rating: 1, content: 'Updated review' };
+        const res = await request(app).put('/api/reviews/all/1').send(updatedReview).set('user_id', user_id);
+        expect(res.status).toBe(400);
+        expect(res.body.error[0].msg).toBe(validationResponses.update);
+    });
+
     test('PUT should update a review', async () => {
         const reviewBeforeUpdate = await Review.findByPk(review_id);
         expect(reviewBeforeUpdate.rating).toBe(5);
@@ -92,6 +99,14 @@ describe('/api/reviews/all/:space', () => {
         const reviewAfterUpdate = await Review.findByPk(review_id);
         expect(reviewAfterUpdate.rating).toBe(1);
         expect(reviewAfterUpdate.content).toBe('Updated review');
+    });
+
+    test('DELETE should NOT delete a review if id is missing', async () => {
+        const res = await request(app).delete('/api/reviews/all/1').set('user_id', user_id);
+        expect(res.status).toBe(400);
+
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error[0].msg).toBe(validationResponses.delete);
     });
 
     test('DELETE should delete a review', async () => {
