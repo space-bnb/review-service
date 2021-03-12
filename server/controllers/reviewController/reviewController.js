@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const mapUserToReview = require('../../middleware/mapUserToReview');
 const ReviewRepository = require('./reviewRepository');
+const createReviewValidation = require('../../middleware/createReviewValidation');
 const { noReviews, serverError } = require('../../constants/httpResponses');
 
 router.get('/:space', async (req, res) => {
@@ -15,7 +16,7 @@ router.get('/:space', async (req, res) => {
     }
 });
 
-router.post('/:space', mapUserToReview, async (req, res) => {
+router.post('/:space', mapUserToReview, createReviewValidation, async (req, res) => {
     const repo = new ReviewRepository(req.params.space);
     try {
         const newReview = await repo.create(req.body);
