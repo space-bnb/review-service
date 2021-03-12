@@ -1,70 +1,25 @@
-// const request = require('supertest');
-// const app = require('../server');
-// const mongoose = require('mongoose');
-// const { noReviewData } = require('../constants/httpResponses');
-// const { ReviewData } = require('../db/models/Review');
+require('../db/relationships');
+const db = require('../db/index');
+const request = require('supertest');
+const app = require('../server');
 
-// let server;
+let server;
 
-// beforeAll(async () => {
-//     await mongoose.connect(process.env.MONGO_URI_DEV, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         useFindAndModify: false,
-//     });
-//     server = app.listen(5003, () => console.log('Test server started'));
-// });
-
-// afterAll(async () => {
-//     await server.close();
-//     await mongoose.disconnect();
-// });
-
-describe('GET /api/reviews/info/:workspaceId', () => {
-    test('should get review data with properties avg and reviewCount', async () => {
-        // const res = await request(app).get('/api/reviews/info/1');
-        // expect(res.status).toBe(200);
-        // expect(res.body).toHaveProperty('avg');
-        // expect(res.body).toHaveProperty('reviewCount');
-    });
-
-    // test('should return statusCode 404 with error message if no data is found', async () => {
-    //     const res = await request(app).get('/api/reviews/info/10000');
-
-    //     expect(res.status).toBe(404);
-    //     expect(res.body).toHaveProperty('message');
-    //     expect(res.body.message).toBe(noReviewData);
-    // });
+beforeAll(async () => {
+    server = app.listen(5003, () => console.log('Test server started'));
 });
 
-// describe('POST /api/reviews/info', () => {
-//     test('should create a new record for ReviewData', async () => {
-//         const reviewDataBeforePost = await ReviewData.find();
-//         const res = await request(app).post('/api/reviews/info');
-//         const reviewDataAfterPost = await ReviewData.find();
+afterAll(async () => {
+    await server.close();
+    await db.close();
+});
 
-//         expect(res.status).toBe(201);
-//         expect(res.body).toHaveProperty('total');
-//         expect(res.body).toHaveProperty('reviewCount');
-//         expect(res.body).toHaveProperty('_id');
-//         expect(res.body).toHaveProperty('workspaceId');
-//         expect(res.body).toHaveProperty('workspaceSlug');
-//         expect(res.body).toHaveProperty('reviews');
-//         expect(reviewDataAfterPost.length - reviewDataBeforePost.length).toBe(1);
-//     });
-// });
+describe('GET /api/reviews/info/:space', () => {
+    test('should get review data with properties avg and reviewCount', async () => {
+        const res = await request(app).get('/api/reviews/info/1');
 
-// describe('DELETE /api/reviews/info/:workspaceId', () => {
-//     test('should delete ReviewData record', async () => {
-//         const existingRecord = await request(app).get('/api/reviews/info/101');
-//         expect(existingRecord.body).toHaveProperty('avg');
-//         expect(existingRecord.body).toHaveProperty('reviewCount');
-
-//         const res = await request(app).delete('/api/reviews/info/101');
-//         expect(res.status).toBe(204);
-
-//         const deletedRecord = await request(app).get('/api/reviews/info/101');
-//         expect(deletedRecord.status).toBe(404);
-//         expect(deletedRecord.body.message).toBe(noReviewData);
-//     });
-// });
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('avg');
+        expect(res.body).toHaveProperty('reviewCount');
+    });
+});

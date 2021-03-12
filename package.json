@@ -14,7 +14,7 @@
     "data-generate": "node server/dataGeneration/index.js && node server/dumps/execCat.js",
     "build": "webpack",
     "dev-build": "webpack --watch",
-    "test-server": "jest --detectOpenHandles --testEnvironment=node --verbose ./server/__tests__",
+    "test-server": "jest --detectOpenHandles --testEnvironment=node --verbose -i ./server/__tests__",
     "test-unit": "jest ./client/spec/unit",
     "shell": "node server/dumps/execCat.js"
   },

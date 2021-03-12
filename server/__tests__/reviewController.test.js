@@ -1,5 +1,5 @@
-require('../db/index');
 require('../db/relationships');
+const db = require('../db/index');
 const request = require('supertest');
 const app = require('../server');
 const User = require('../db/models/User');
@@ -25,7 +25,8 @@ beforeAll(async () => {
 
 afterAll(async () => {
     await server.close();
-    await User.destroy({ where: { id: user_id } });
+    await User.destroy({ where: { first_name: 'Test', last_name: 'User' } });
+    await db.close();
 });
 
 describe('/api/reviews/all/:space', () => {
