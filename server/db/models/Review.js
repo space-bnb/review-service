@@ -24,6 +24,7 @@ Review.init(
         date: {
             type: DataTypes.DATE,
             allowNull: false,
+            defaultValue: new Date(),
         },
         content: {
             type: DataTypes.STRING,
