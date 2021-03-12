@@ -18,6 +18,7 @@ class ReviewRepository {
                     model: User,
                     attributes: ['first_name', 'last_name'],
                 },
+                order: [['date', 'desc']],
             });
     }
 

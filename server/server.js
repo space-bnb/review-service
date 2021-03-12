@@ -1,4 +1,3 @@
-require('./db/relationships');
 const express = require('express');
 const path = require('path');
 const reviewInfoRoutes = require('./controllers/reviewDataConroller/reviewDataController');
