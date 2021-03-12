@@ -8,6 +8,8 @@ Review.init(
         id: {
             type: DataTypes.UUID,
             primaryKey: true,
+            allowNull: false,
+            defaultValue: DataTypes.UUIDV4,
         },
         date: {
             type: DataTypes.DATE,
