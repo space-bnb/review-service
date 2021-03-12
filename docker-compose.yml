@@ -58,6 +58,17 @@ services:
       - app
       - pg
 
+  proxy:
+    image: nginx
+    container_name: proxy
+    ports: 
+      - "80:80"
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./client/dist:/var/www/my-site
+    depends_on: 
+      - app
+
 volumes:
   pgadmin-data:
   mongodb:
