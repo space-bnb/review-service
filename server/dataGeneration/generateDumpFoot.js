@@ -7,6 +7,12 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.reviews
     ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT users_fkey
+    FOREIGN KEY (user_id)
+    REFERENCES public.users (id)
+    ON DELETE CASCADE;
 `;
 
 fs.writeFile(path.join(__dirname, '..', 'dumps', 'foot.sql'), query, (err) => {

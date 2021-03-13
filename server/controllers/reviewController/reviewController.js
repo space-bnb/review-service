@@ -4,7 +4,7 @@ const createReviewValidation = require('../../middleware/createReviewValidation'
 const updateReviewValidation = require('../../middleware/updateReviewValidation');
 const deleteReviewValidation = require('../../middleware/deleteReviewValidation');
 const ReviewRepository = require('./reviewRepository');
-const { validationResult } = require('express-validator');
+const Validator = require('../validator');
 const { noReviews, serverError } = require('../../constants/httpResponses');
 
 router.get('/:space', async (req, res) => {
@@ -21,10 +21,9 @@ router.get('/:space', async (req, res) => {
 
 router.post('/:space', mapUserToReview, createReviewValidation, async (req, res) => {
     const repo = new ReviewRepository(req.params.space);
+    const validator = new Validator(req);
     try {
-        const validation = validationResult(req);
-        const errorsPresent = !validation.isEmpty();
-        if (errorsPresent) return res.status(400).json({ error: validation.array() });
+        if (validator.error) return res.status(400).json(validator.error);
 
         const newReview = await repo.create(req.body);
         return res.status(201).json(newReview);
@@ -35,10 +34,9 @@ router.post('/:space', mapUserToReview, createReviewValidation, async (req, res)
 
 router.put('/:space', mapUserToReview, updateReviewValidation, async (req, res) => {
     const repo = new ReviewRepository(req.params.space);
+    const validator = new Validator(req);
     try {
-        const validation = validationResult(req);
-        const errorsPresent = !validation.isEmpty();
-        if (errorsPresent) return res.status(400).json({ error: validation.array() });
+        if (validator.error) return res.status(400).json(validator.error);
 
         await repo.update(req.body);
         return res.sendStatus(204);
@@ -49,10 +47,9 @@ router.put('/:space', mapUserToReview, updateReviewValidation, async (req, res) 
 
 router.delete('/:space', mapUserToReview, deleteReviewValidation, async (req, res) => {
     const repo = new ReviewRepository(req.params.space);
+    const validator = new Validator(req);
     try {
-        const validation = validationResult(req);
-        const errorsPresent = !validation.isEmpty();
-        if (errorsPresent) return res.status(400).json({ error: validation.array() });
+        if (validator.error) return res.status(400).json(validator.error);
 
         await repo.delete(req.body);
         return res.sendStatus(204);
