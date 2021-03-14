@@ -5,9 +5,9 @@ WORKDIR /app
 COPY ./package.json ./
 COPY ./package-lock.json ./
 
-RUN npm install --production
+RUN npm install
 
-COPY ./server /app/server
+COPY ./server ./server
 
 EXPOSE 5002
 

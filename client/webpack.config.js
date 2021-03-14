@@ -1,6 +1,6 @@
 const path = require('path');
-const PUB = path.resolve(process.env.PWD, 'client', 'dist');
-const SRC = path.resolve(process.env.PWD, 'client', 'src');
+const PUB = path.resolve(process.env.PWD, 'dist');
+const SRC = path.resolve(process.env.PWD, 'src');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {

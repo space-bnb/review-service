@@ -1,7 +1,0 @@
-node_modules
-data
-server/dataGeneration
-server/dumps
-.git
-Dockerfile
-devDeps.json
