@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --testEnvironment=node --verbose -i ./server__tests__",
+    "test": "jest --detectOpenHandles --testEnvironment=node --verbose -i ./server/__tests__",
     "start": "node server/serverStart.js",
     "dev": "nodemon server/serverStart.js"
   },
