@@ -11,7 +11,6 @@ router.get('/:space', async (req, res) => {
 
         return res.status(200).json({ reviews });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({ message: serverError });
     }
 });
@@ -22,7 +21,6 @@ router.post('/:space', mapUserToReview, async (req, res) => {
         const newReview = await repo.create(req.body);
         return res.status(201).json(newReview);
     } catch (error) {
-        console.log(error);
         return res.status(500).json({ message: serverError });
     }
 });
