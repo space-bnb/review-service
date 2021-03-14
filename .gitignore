@@ -37,3 +37,4 @@ server/dumps/*
 pg/
 devDeps.json
 data
+proxy

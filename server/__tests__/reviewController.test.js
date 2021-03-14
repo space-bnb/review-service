@@ -1,89 +1,119 @@
+require('../db/relationships');
+const db = require('../db/index');
 const request = require('supertest');
-const mongoose = require('mongoose');
 const app = require('../server');
-const { ReviewData } = require('../db/models/Review');
+const User = require('../db/models/User');
+const httpResponses = require('../constants/httpResponses');
+const validationResponses = require('../constants/validationResponses');
+const Review = require('../db/models/Review');
 
 let server;
+let user_id;
+let review_id;
 
 beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI_DEV, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
+    const user = await User.create({
+        first_name: 'Test',
+        last_name: 'User',
+        email: 'testuser@mail.com',
+        password: 'password',
     });
+
+    user_id = user.id;
     server = app.listen(5003, () => console.log('Test server started'));
 });
 
 afterAll(async () => {
     await server.close();
-    await mongoose.disconnect();
+    await User.destroy({ where: { first_name: 'Test', last_name: 'User' } });
+    await db.close();
 });
 
-describe('/api/reviews/all/:workspaceId', () => {
-    test('GET should get and object with a reviews property that is an array of review objects', async () => {
+describe('/api/reviews/all/:space', () => {
+    test('GET should reviews an array of reviews for the in the requests parameters', async () => {
         const res = await request(app).get('/api/reviews/all/1');
 
         expect(res.status).toBe(200);
         expect(res.body).toHaveProperty('reviews');
-        expect(res.body.reviews[0]).toHaveProperty('date');
         expect(res.body.reviews[0]).toHaveProperty('rating');
         expect(res.body.reviews[0]).toHaveProperty('content');
-        expect(res.body.reviews[0]).toHaveProperty('parentId');
+        expect(res.body.reviews[0]).toHaveProperty('date');
+        expect(res.body.reviews[0]).toHaveProperty('user');
+        expect(res.body.reviews[0].user).toHaveProperty('first_name');
+        expect(res.body.reviews[0].user).toHaveProperty('last_name');
     });
 
     test('POST should create a new review', async () => {
-        const review = {
-            author: 'Dane Murphy',
-            date: '2021-03-06T19:23:56.344Z',
-            rating: 5,
-            content: 'This is a new review being added to a ReviewData',
-            parentId: '6043d6cc8b822c00a5ea3342',
-        };
+        const review = { rating: 5, content: 'Here is a new review' };
+        const res = await request(app).post('/api/reviews/all/1').send(review).set('user_id', user_id);
 
-        const res = await request(app).post('/api/reviews/all/1').send(review);
+        review_id = res.body.id; // for PUT test
 
         expect(res.status).toBe(201);
-        expect(res.body).toHaveProperty('_id');
-        expect(res.body).toHaveProperty('date');
-        expect(res.body).toHaveProperty('rating');
-        expect(res.body).toHaveProperty('content');
-        expect(res.body).toHaveProperty('parentId');
+        expect(res.body.rating).toBe(5);
+        expect(res.body.content).toBe('Here is a new review');
     });
 
-    test('PUT should update an existing review record', async () => {
-        const reviewData = await ReviewData.findOne({ workspaceId: 1 });
+    test('POST should NOT create a new review without the user_id', async () => {
+        const review = { rating: 5, content: 'Here is a new review' };
+        const res = await request(app).post('/api/reviews/all/1').send(review);
 
-        const review = {
-            _id: reviewData.reviews[reviewData.reviews.length - 1]._id,
-            author: 'Dane Murphy',
-            date: '2021-03-06T19:23:56.344Z',
-            rating: 1,
-            content: 'This is a new review being updated',
-            parentId: '6043d6cc8b822c00a5ea3342',
-        };
-
-        expect(reviewData.reviews[reviewData.reviews.length - 1].rating).not.toBe(1);
-        await request(app).put('/api/reviews/all/1').send(review);
-
-        const updatedReviewData = await ReviewData.findOne({ workspaceId: 1 });
-        const updatedReview = updatedReviewData.reviews[updatedReviewData.reviews.length - 1];
-
-        expect(updatedReview._id).toEqual(review._id);
-        expect(updatedReview.author).toBe(review.author);
-        expect(updatedReview.date.toISOString()).toBe(review.date);
-        expect(updatedReview.rating).toBe(review.rating);
-        expect(updatedReview.content).toBe(review.content);
-        expect(String(updatedReview.parentId)).toBe(review.parentId);
+        expect(res.status).toBe(400);
+        expect(res.body).toEqual({ message: httpResponses.notLoggedIn });
     });
 
-    test('DELETE should delete a single review', async () => {
-        const reviewData = await ReviewData.findOne({ workspaceId: 1 });
-        const reviewId = reviewData.reviews[reviewData.reviews.length - 1]._id;
+    test('POST should NOT create a new review with a missing rating property', async () => {
+        const review = { content: 'Here is a new review' };
+        const res = await request(app).post('/api/reviews/all/1').send(review).set('user_id', user_id);
 
-        const res = await request(app).delete('/api/reviews/all/1').send({ reviewId });
-        const reviewDataAfterDelete = await ReviewData.findOne({ workspaceId: 1 });
+        expect(res.status).toBe(400);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error[1].msg).toBe(validationResponses.rating);
+    });
 
+    test('POST should NOT create a new review with a missing content property', async () => {
+        const review = { rating: 4 };
+        const res = await request(app).post('/api/reviews/all/1').send(review).set('user_id', user_id);
+
+        expect(res.status).toBe(400);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error[0].msg).toBe(validationResponses.review);
+    });
+
+    test('PUT should NOT updated with missing id', async () => {
+        const updatedReview = { rating: 1, content: 'Updated review' };
+        const res = await request(app).put('/api/reviews/all/1').send(updatedReview).set('user_id', user_id);
+        expect(res.status).toBe(400);
+        expect(res.body.error[0].msg).toBe(validationResponses.update);
+    });
+
+    test('PUT should update a review', async () => {
+        const reviewBeforeUpdate = await Review.findByPk(review_id);
+        expect(reviewBeforeUpdate.rating).toBe(5);
+        expect(reviewBeforeUpdate.content).toBe('Here is a new review');
+
+        const updatedReview = { id: review_id, rating: 1, content: 'Updated review' };
+        const res = await request(app).put('/api/reviews/all/1').send(updatedReview).set('user_id', user_id);
         expect(res.status).toBe(204);
-        expect(reviewData.reviews.length - reviewDataAfterDelete.reviews.length).toBe(1);
+
+        const reviewAfterUpdate = await Review.findByPk(review_id);
+        expect(reviewAfterUpdate.rating).toBe(1);
+        expect(reviewAfterUpdate.content).toBe('Updated review');
+    });
+
+    test('DELETE should NOT delete a review if id is missing', async () => {
+        const res = await request(app).delete('/api/reviews/all/1').set('user_id', user_id);
+        expect(res.status).toBe(400);
+
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error[0].msg).toBe(validationResponses.delete);
+    });
+
+    test('DELETE should delete a review', async () => {
+        const res = await request(app).delete('/api/reviews/all/1').send({ id: review_id }).set('user_id', user_id);
+        expect(res.status).toBe(204);
+
+        const reviewAfterDelete = await Review.findByPk(review_id);
+        expect(reviewAfterDelete).toBeNull();
     });
 });
