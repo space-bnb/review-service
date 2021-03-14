@@ -26,13 +26,12 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
-client/dist/reviews.js
-client/dist/reviews.js.LICENSE.txt
+client/dist
 
-server/dumps/*
-!server/dumps/.gitkeep
-!server/dumps/catScript.sh
-!server/dumps/execCat.js
+backend/dumps/*
+!backend/dumps/.gitkeep
+!backend/dumps/catScript.sh
+!backend/dumps/execCat.js
 
 pg/
 devDeps.json
