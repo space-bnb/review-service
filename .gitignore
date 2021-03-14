@@ -26,8 +26,7 @@ coverage
 
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
-client/dist/reviews.js
-client/dist/reviews.js.LICENSE.txt
+client/dist
 
 backend/dumps/*
 !backend/dumps/.gitkeep
